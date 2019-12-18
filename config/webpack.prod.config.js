@@ -2,6 +2,7 @@ const merge = require('webpack-merge');
 const baseConfig = require('./webpack.base.config')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
+const ora = require('ora')
 
 const config = {
     output: {

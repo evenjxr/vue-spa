@@ -1,5 +1,6 @@
 <template>
     <div class='app'>
+        <h1>演示</h1>
         <router-view></router-view>
     </div>
 </template>
@@ -12,14 +13,20 @@
             }
         },
         created() {
-            console.log(33333)
+            console.log('初始化')
         }
     }
 </script>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
+    @import "./static/css/common/function.scss";
     .app {
-        width: 800px;
-        margin: 100px auto;
+        width: px2rem(750);
+        background: url('./static/images/bg.png') no-repeat left center;
+        background-size: 100% auto;
+        height: 100%;
+        h1 {
+            font-size: px2rem(15);
+        }
     }
 </style>

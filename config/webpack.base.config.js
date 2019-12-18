@@ -1,14 +1,10 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const ProgressBarPlugin = require('progress-bar-webpack-plugin')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const { resolve } = require('path')
-const argv = require('yargs-parser')(process.argv.slice(2));
-
-// const ExtractTextPlugin = require('extract-text-webpack-plugin');
-// const path = require('path');
-// const glob = require('glob');
-
+const argv = require('yargs-parser')(process.argv.slice(2))
 
 const config = {
     mode: 'development',
@@ -16,7 +12,7 @@ const config = {
         'main': './src/main.js',
     },
     resolve: {
-        extensions: ['.js', '.vue', '.json'],
+        extensions: ['.js', '.vue', '.json', '.scss', '.css', '.sass'],
         alias: {
             'vue$': 'vue/dist/vue.runtime.js',
             '@': resolve('src')
@@ -39,15 +35,27 @@ const config = {
             },
             {
                 test: /\.s[a|c]ss$/,
-                loader: 'style-loader!css-loader!sass-loader',
+                loader: [ 
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            publicPath: '../',
+                            filename: "[name].css?[hash:4]"
+                        }
+                    },
+                    'css-loader',
+                    'sass-loader'
+                ]
             },
-            // {
-            //     test: /\.css$/,
-            //     loader: ExtractTextPlugin.extract({
-            //       fallbackLoader: 'style-loader',
-            //       loader: 'css-loader'
-            //     })
-            //   }
+            {
+                test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 10000,
+                    outputPath: 'img',
+                    name: '[name].[ext]?[hash:4]'
+                }
+            }
         ]
     },
     plugins: [
@@ -60,10 +68,9 @@ const config = {
             loading: '<span>加载中...</span>'
         }),
         new ProgressBarPlugin(),
-        // new ExtractTextPlugin('[name].[contenthash].css'),
-        // new PurifyCSSPlugin({
-        //     paths: glob.sync(path.join(__dirname, 'app/*.html')),
-        // })
+        new MiniCssExtractPlugin({
+            filename: "./style/[name].css?[hash:4]"
+        }),
     ]
 }
 module.exports = config;
