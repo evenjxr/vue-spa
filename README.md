@@ -1,7 +1,7 @@
 
 # About
 
-此项目是 vue + webpack 快速构建项目[node-elm](https://github.com/bailicangdu/node-elm) 已初始化路由，开发环境，生产环境，依赖配置生成文件
+此项目是 vue + webpack 快速构建项目 已初始化路由，开发环境，生产环境，依赖配置生成文件
 
 
 # 说明
